@@ -1,0 +1,35 @@
+<script type="text/javascript" nonce="{{nonce}}">
+
+    // wrap all our snippets so that we have the DOM available to read/manipulate
+    document.addEventListener("DOMContentLoaded", function(event){
+        // log that the plugin is running
+        console.log("JavaScript Snippets plugin version v{{version}} is enabled");
+
+        // snippet state
+        const enableTrimInstanceName = {{enableTrimInstanceName}};
+
+        // get the current page & prefix, could be generally useful
+        let path = window.location.pathname.split("/");
+        let page = path.pop();
+        let prefix =  path.pop();
+        let pagePrefixed = prefix + "/" + page;
+
+        // start trim instance name snippet
+        if (enableTrimInstanceName) {
+            console.log("Trim instance name snippet is enabled");
+            // only on allowed pages
+            if (pagePrefixed == "provisioning/instances") {
+                document.body.addEventListener("click", (event) => {
+                    let nameF = document.getElementById("name");
+                    if (nameF != null) {
+                        nameF.addEventListener("blur", (event) => {
+                            nameF.value = nameF.value.trim()
+                        });
+                    }
+                });
+            }
+        }
+        // end trim instance name snippet
+    });
+
+</script>
